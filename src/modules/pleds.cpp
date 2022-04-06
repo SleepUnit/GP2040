@@ -8,13 +8,57 @@
 #include "pico/stdlib.h"
 #include "hardware/pwm.h"
 #include "GamepadEnums.h"
-#include "Animation.hpp"
-#include "pleds.h"
 #include "xinput_driver.h"
+
+// Pico Includes
+#include "modules/pleds.h"
 
 const int PLED_PINS[] = {PLED1_PIN, PLED2_PIN, PLED3_PIN, PLED4_PIN};
 InputMode inputMode;
 uint32_t rgbPLEDValues[4];
+
+bool PLEDModule::available() {
+	return PLED_TYPE != PLED_TYPE_NONE;
+}
+
+void PLEDModule::setup() {
+	queue_init(&featureQueue, PLED_REPORT_SIZE, 20); // ???
+	switch (PLED_TYPE)
+	{
+		case PLED_TYPE_PWM:
+			pleds = new PWMPlayerLEDs();
+			break;
+		case PLED_TYPE_RGB:
+			pleds = new RGBPlayerLEDs();
+			break;
+	}
+
+	if (pleds != nullptr)
+		pleds->setup();
+}
+
+void PLEDModule::loop() {
+	if (pleds != nullptr)
+		pleds->display();
+}
+
+void PLEDModule::process(Gamepad *gamepad) {
+	static uint8_t featureData[PLED_REPORT_SIZE];
+
+	if (queue_try_remove(&featureQueue, featureData))
+	{
+		inputMode = gamepad->options.inputMode;
+		switch (inputMode)
+		{
+			case INPUT_MODE_XINPUT:
+				animationState = getXInputAnimation(featureData);
+				break;
+		}
+
+		if (pleds != nullptr && animationState.animation != PLED_ANIM_NONE)
+			pleds->animate(animationState);
+	}
+}
 
 void setRGBPLEDs(uint32_t *frame)
 {
@@ -23,7 +67,7 @@ void setRGBPLEDs(uint32_t *frame)
 			frame[PLED_PINS[i]] = rgbPLEDValues[i];
 }
 
-PLEDAnimationState getXInputAnimation(uint8_t *data)
+PLEDAnimationState PLEDModule::getXInputAnimation(uint8_t *data)
 {
 	PLEDAnimationState animationState =
 	{
@@ -132,49 +176,3 @@ void RGBPlayerLEDs::display()
 	}
 }
 
-void PLEDModule::setup()
-{
-	queue_init(&featureQueue, PLED_REPORT_SIZE, 20);
-
-	enabled = PLED_TYPE != PLED_TYPE_NONE;
-	if (enabled)
-	{
-		switch (type)
-		{
-			case PLED_TYPE_PWM:
-				pleds = new PWMPlayerLEDs();
-				break;
-			case PLED_TYPE_RGB:
-				pleds = new RGBPlayerLEDs();
-				break;
-		}
-
-		if (pleds != nullptr)
-			pleds->setup();
-	}
-}
-
-void PLEDModule::loop()
-{
-	if (pleds != nullptr)
-		pleds->display();
-}
-
-void PLEDModule::process(Gamepad *gamepad)
-{
-	static uint8_t featureData[PLED_REPORT_SIZE];
-
-	if (queue_try_remove(&featureQueue, featureData))
-	{
-		inputMode = gamepad->options.inputMode;
-		switch (inputMode)
-		{
-			case INPUT_MODE_XINPUT:
-				animationState = getXInputAnimation(featureData);
-				break;
-		}
-
-		if (pleds != nullptr && animationState.animation != PLED_ANIM_NONE)
-			pleds->animate(animationState);
-	}
-}

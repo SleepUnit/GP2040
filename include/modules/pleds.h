@@ -10,7 +10,9 @@
 #include <stdint.h>
 #include "AnimationStation.hpp"
 #include "PlayerLEDs.h"
-#include "gp2040.h"
+#include "gpmodule.h"
+
+#include "pico/util/queue.h"
 
 #define PLED_REPORT_SIZE 32
 
@@ -32,6 +34,7 @@
 
 #define PLED_MASK_ALL ((1U << PLED1_PIN) | (1U << PLED2_PIN) | (1U << PLED3_PIN) | (1U << PLED4_PIN))
 
+// This needs to be moved to storage if we're going to share between modules
 extern NeoPico *neopico;
 extern AnimationStation as;
 
@@ -49,16 +52,19 @@ public:
 	void display();
 };
 
+// Player LED Module
 class PLEDModule : public GPModule
 {
 public:
+	virtual bool available();  // GPModule
+	virtual void setup();
+	virtual void loop();
+	virtual void process(Gamepad *gamepad);
+	PLEDModule() : type(PLED_TYPE) { }
 	PLEDModule(PLEDType type) : type(type) { }
-
-	void setup();
-	void loop();
-	void process(Gamepad *gamepad);
 	queue_t featureQueue;
 protected:
+	PLEDAnimationState getXInputAnimation(uint8_t *);
 	PLEDType type;
 	PlayerLEDs *pleds = nullptr;
 	PLEDAnimationState animationState;

@@ -6,13 +6,22 @@
 #ifndef LEDS_H_
 #define LEDS_H_
 
-#include "BoardConfig.h"
+// Pico Includes
+#include "pico/util/queue.h"
+#include <string>
 #include <vector>
+#include <map>
+
+// GP2040 Includes
+#include "helper.h"
+#include "gamepad.h"
+#include "gpmodule.h"
+#include "storage.h"
+
+// MPGS
+#include "BoardConfig.h"
 #include "AnimationStation.hpp"
 #include "NeoPico.hpp"
-#include "gamepad.h"
-#include "enums.h"
-#include "gp2040.h"
 
 #ifndef BOARD_LEDS_PIN
 #define BOARD_LEDS_PIN -1
@@ -140,21 +149,37 @@
 
 void configureAnimations(AnimationStation *as);
 AnimationHotkey animationHotkeys(Gamepad *gamepad);
-void configureLEDs(LEDOptions ledOptions);
 PixelMatrix createLedButtonLayout(ButtonLayout layout, int ledsPerPixel);
 PixelMatrix createLedButtonLayout(ButtonLayout layout, std::vector<uint8_t> *positions);
 
-class LEDModule : public GPModule {
+// NeoPico LED Module
+class NeoPicoLEDModule : public GPModule {
 public:
-	void setup();
-	void loop();
-	void process(Gamepad *gamepad);
+	virtual bool available();  // GPModule
+	virtual void setup();
+	virtual void loop();
+	virtual void process(Gamepad *gamepad);
 	void trySave();
 	void configureLEDs();
 	uint32_t frame[100];
-	LEDOptions ledOptions;
+private:
+	std::vector<uint8_t> * getLEDPositions(std::string button, std::vector<std::vector<uint8_t>> *positions);
+	std::vector<std::vector<Pixel>> createLedLayoutArcadeButtons(std::vector<std::vector<uint8_t>> *positions);
+	std::vector<std::vector<Pixel>> createLedLayoutArcadeHitbox(std::vector<std::vector<uint8_t>> *positions);
+	std::vector<std::vector<Pixel>> createLedLayoutArcadeWasd(std::vector<std::vector<uint8_t>> *positions);
+	std::vector<std::vector<Pixel>> createLedButtonLayout(ButtonLayout layout, std::vector<std::vector<uint8_t>> *positions);
+	std::vector<std::vector<Pixel>> createLedButtonLayout(ButtonLayout layout, uint8_t ledsPerPixel, uint8_t ledButtonCount);
+	uint8_t setupButtonPositions();
+	absolute_time_t nextRunTime;
+	const uint32_t intervalMS = 10;
+	uint8_t ledCount;
+	PixelMatrix matrix;
+	NeoPico *neopico;
+	AnimationStation as;
+	queue_t baseAnimationQueue;
+	queue_t buttonAnimationQueue;
+	queue_t animationSaveQueue;
+	std::map<std::string, int> buttonPositions;
 };
-
-extern LEDModule ledModule;
 
 #endif

@@ -8,7 +8,10 @@
 
 #include <stdint.h>
 #include "NeoPico.hpp"
-#include "enums.h"
+#include "pico/util/queue.h"
+
+#include "helper.h"
+#include "gamepad.h"
 
 #define GAMEPAD_STORAGE_INDEX      0 // 1024 bytes for gamepad options
 #define BOARD_STORAGE_INDEX     1024 //  512 bytes for hardware options
@@ -48,8 +51,9 @@ struct BoardOptions
 	uint8_t displaySize;
 	bool displayFlip;
 	bool displayInvert;
+
 	uint32_t checksum;
-};
+} __attribute__((packed));
 
 struct LEDOptions
 {
@@ -78,12 +82,50 @@ struct LEDOptions
 	int indexR3;
 	int indexA1;
 	int indexA2;
+} __attribute__((packed));
+
+// Storage manager for board, LED options, and thread-safe settings
+class Storage {
+public:
+	Storage(Storage const&) = delete;
+	void operator=(Storage const&)  = delete;
+
+	BoardOptions getBoardOptions();
+	void setBoardOptions(BoardOptions options);
+	LEDOptions getLEDOptions();
+	void setLEDOptions(LEDOptions options);
+
+// Thread-safe storage ensures cross-thread talk
+	static Storage& getInstance()
+	{
+		static Storage    instance; // Guaranteed to be destroyed.
+								// Instantiated on first use.
+		return instance;
+	}
+
+	void SetConfigMode(bool mode) { // hack for config mode
+		CONFIG_MODE = mode;
+	}
+	bool GetConfigMode() { return CONFIG_MODE; }
+
+	void SetQueue(queue_t queuein) {
+		gamepadQueue = queuein;
+	}
+	queue_t * GetQueue() { return &gamepadQueue; }
+
+	void SetGamepad(Gamepad * newpad) {
+		gamepad = newpad;
+	}
+
+	Gamepad * GetGamepad() {
+		return gamepad;
+	}
+private:
+	Storage() {}
+
+	bool CONFIG_MODE; // stack storage for cross-thread chatter
+	queue_t gamepadQueue;
+	Gamepad * gamepad;
 };
-
-BoardOptions getBoardOptions();
-void setBoardOptions(BoardOptions options);
-
-LEDOptions getLEDOptions();
-void setLEDOptions(LEDOptions options);
 
 #endif
