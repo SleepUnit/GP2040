@@ -152,6 +152,15 @@ AnimationHotkey animationHotkeys(Gamepad *gamepad);
 PixelMatrix createLedButtonLayout(ButtonLayout layout, int ledsPerPixel);
 PixelMatrix createLedButtonLayout(ButtonLayout layout, std::vector<uint8_t> *positions);
 
+// Neo Pixel needs to tie into PlayerLEDS led Levels
+class NeoPicoPlayerLEDs : public PlayerLEDs
+{
+public:
+	virtual void setup(){}
+	virtual void display(){}
+	uint16_t * getLedLevels() { return ledLevels; }
+};
+
 // NeoPico LED Module
 class NeoPicoLEDModule : public GPModule {
 public:
@@ -175,6 +184,9 @@ private:
 	uint8_t ledCount;
 	PixelMatrix matrix;
 	NeoPico *neopico;
+	InputMode inputMode; // HACK
+	PLEDAnimationState animationState; // NeoPico can control the player LEDs
+	NeoPicoPlayerLEDs * neoPLEDs = nullptr;
 	AnimationStation as;
 	queue_t baseAnimationQueue;
 	queue_t buttonAnimationQueue;

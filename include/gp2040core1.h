@@ -21,12 +21,13 @@ public:
     void setup();
     void run();
 private:
-    void configLoop();
     void loop();
-	IICDisplayModule iicdisplay;
+    void configLoop();
+    void setupModule(GPModule*);
+	std::vector<GPModule*> modules;
+    I2CDisplayModule i2cdisplay;
     NeoPicoLEDModule neopicoled;
-	PLEDModule pled;
-    std::vector<GPModule*> modules;
+	PLEDModule playerled;
 };
 
 #endif

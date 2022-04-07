@@ -44,7 +44,6 @@
 using namespace std;
 
 extern struct fsdata_file file__index_html[];
-//extern Gamepad gamepad;
 
 const static vector<string> spaPaths = { "/display-config", "/led-config", "/pin-mapping", "/settings", "/reset-settings" };
 const static vector<string> excludePaths = { "/css", "/images", "/js", "/static" };

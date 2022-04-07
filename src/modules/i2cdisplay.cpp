@@ -4,16 +4,17 @@
  */
 
 #include "modules/i2cdisplay.h"
+#include "enums.h"
 #include "helper.h"
 #include "storage.h"
 #include "pico/stdlib.h"
 
-bool IICDisplayModule::available() {
+bool I2CDisplayModule::available() {
 	BoardOptions boardOptions = Storage::getInstance().getBoardOptions();
 	return boardOptions.hasI2CDisplay && boardOptions.i2cSDAPin != -1 && boardOptions.i2cSCLPin != -1;
 }
 
-void IICDisplayModule::setup() {
+void I2CDisplayModule::setup() {
 	BoardOptions options = Storage::getInstance().getBoardOptions();
 	obdI2CInit(&obd,
 		options.displaySize,
@@ -32,11 +33,11 @@ void IICDisplayModule::setup() {
 	clearScreen(1);
 }
 
-void IICDisplayModule::loop() {
+void I2CDisplayModule::loop() {
 	// All screen updates should be handled in process() as they need to display ASAP
 }
 
-void IICDisplayModule::process(Gamepad *gamepad) {
+void I2CDisplayModule::process(Gamepad *gamepad) {
 	clearScreen(0);
 
 	setStatusBar(gamepad);
@@ -60,11 +61,11 @@ void IICDisplayModule::process(Gamepad *gamepad) {
 	obdDumpBuffer(&obd, NULL);
 }
 
-void IICDisplayModule::clearScreen(int render = 0) {
+void I2CDisplayModule::clearScreen(int render = 0) {
 	obdFill(&obd, 0, render);
 }
 
-void IICDisplayModule::drawHitbox(int startX, int startY, int buttonRadius, int buttonPadding, Gamepad *gamepad) {
+void I2CDisplayModule::drawHitbox(int startX, int startY, int buttonRadius, int buttonPadding, Gamepad *gamepad) {
 	const int buttonMargin = buttonPadding + (buttonRadius * 2);
 
 	// UDLR
@@ -85,7 +86,7 @@ void IICDisplayModule::drawHitbox(int startX, int startY, int buttonRadius, int 
 	obdPreciseEllipse(&obd, startX + (buttonMargin * 5.75), startY + buttonMargin, buttonRadius, buttonRadius, 1, gamepad->pressedL2());
 }
 
-void IICDisplayModule::drawWasdBox(int startX, int startY, int buttonRadius, int buttonPadding, Gamepad *gamepad)
+void I2CDisplayModule::drawWasdBox(int startX, int startY, int buttonRadius, int buttonPadding, Gamepad *gamepad)
 {
 	const int buttonMargin = buttonPadding + (buttonRadius * 2);
 
@@ -107,7 +108,7 @@ void IICDisplayModule::drawWasdBox(int startX, int startY, int buttonRadius, int
 	obdPreciseEllipse(&obd, startX + buttonMargin * 6.25, startY + buttonMargin, buttonRadius, buttonRadius, 1, gamepad->pressedL2());
 }
 
-void IICDisplayModule::drawArcadeStick(int startX, int startY, int buttonRadius, int buttonPadding, Gamepad *gamepad)
+void I2CDisplayModule::drawArcadeStick(int startX, int startY, int buttonRadius, int buttonPadding, Gamepad *gamepad)
 {
 	const int buttonMargin = buttonPadding + (buttonRadius * 2);
 
@@ -129,12 +130,12 @@ void IICDisplayModule::drawArcadeStick(int startX, int startY, int buttonRadius,
 	obdPreciseEllipse(&obd, startX + buttonMargin * 5.875, startY + buttonMargin, buttonRadius, buttonRadius, 1, gamepad->pressedL2());
 }
 
-void IICDisplayModule::drawStatusBar()
+void I2CDisplayModule::drawStatusBar()
 {
 	obdWriteString(&obd, 0, 0, 0, (char *)statusBar.c_str(), FONT_6x8, 0, 0);
 }
 
-void IICDisplayModule::setStatusBar(Gamepad *gamepad)
+void I2CDisplayModule::setStatusBar(Gamepad *gamepad)
 {
 	// Limit to 21 chars with 6x8 font for now
 	statusBar.clear();

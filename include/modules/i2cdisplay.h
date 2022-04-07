@@ -58,7 +58,7 @@
 #endif
 
 // i2C OLED Display
-class IICDisplayModule : public GPModule
+class I2CDisplayModule : public GPModule
 {
 public:
 	virtual bool available();  // GPModule

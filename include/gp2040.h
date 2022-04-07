@@ -18,7 +18,9 @@ public:
 private:
     void loop();
 	void configLoop(); // web-config
-    uint64_t nextLoop; // update loop
+    uint64_t nextRuntime;
+    uint8_t featureData[32];
+    Gamepad snapshot;
 };
 
 #endif

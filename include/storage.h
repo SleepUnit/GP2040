@@ -10,6 +10,7 @@
 #include "NeoPico.hpp"
 #include "pico/util/queue.h"
 
+#include "enums.h"
 #include "helper.h"
 #include "gamepad.h"
 
@@ -53,7 +54,7 @@ struct BoardOptions
 	bool displayInvert;
 
 	uint32_t checksum;
-} __attribute__((packed));
+};
 
 struct LEDOptions
 {
@@ -82,7 +83,7 @@ struct LEDOptions
 	int indexR3;
 	int indexA1;
 	int indexA2;
-} __attribute__((packed));
+};
 
 // Storage manager for board, LED options, and thread-safe settings
 class Storage {
@@ -107,24 +108,24 @@ public:
 		CONFIG_MODE = mode;
 	}
 	bool GetConfigMode() { return CONFIG_MODE; }
-
-	void SetQueue(queue_t queuein) {
+	void SetGamepadQueue(queue_t queuein) {
 		gamepadQueue = queuein;
 	}
-	queue_t * GetQueue() { return &gamepadQueue; }
-
+	queue_t * GetGamepadQueue() { return &gamepadQueue; }
+	void SetFeatureQueue(queue_t queuein) {
+		featureQueue = queuein;
+	}
+	queue_t * GetFeatureQueue() { return &featureQueue; }
 	void SetGamepad(Gamepad * newpad) {
 		gamepad = newpad;
 	}
-
-	Gamepad * GetGamepad() {
-		return gamepad;
-	}
+	Gamepad * GetGamepad() { return gamepad; }
 private:
 	Storage() {}
 
 	bool CONFIG_MODE; // stack storage for cross-thread chatter
-	queue_t gamepadQueue;
+	queue_t gamepadQueue; // Passing Gamepad Data
+	queue_t featureQueue; // Passing Feature Data (X-Input Player #)
 	Gamepad * gamepad;
 };
 

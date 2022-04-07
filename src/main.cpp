@@ -13,12 +13,11 @@
 // Launch our second core with additional modules loaded in
 void core1() {
 	multicore_lockout_victim_init(); // block core 1
-/*
+
 	// Create GP2040 w/ Additional Modules for Core 1
 	GP2040Core1 * gp2040Core1 = new GP2040Core1();
 	gp2040Core1->setup();
-	gp2040Core1->run();*/
-	while(1) { sleep_us(1000); }
+	gp2040Core1->run();
 }
 
 int main() {
