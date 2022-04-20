@@ -1,7 +1,4 @@
-#ifndef CONFIG_AUTOGEN_H_
-#define CONFIG_AUTOGEN_H_
-
-// Boards supported in PlatformIO build configuration
+#pragma once
 
 #ifdef BOARD_ADAFRUIT_FEATHER_RP2040
 #include "boards/adafruit_feather_rp2040.h"
@@ -15,8 +12,8 @@
 #include "boards/arduino_nano_rp2040_connect.h"
 #elif BOARD_PIMORONI_PICO_LIPO
 #include "boards/pimoroni_picolipo_4mb.h"
+#elif BOARD_CRUSH_COUNTER_20
+#include "boards/crush_counter_20.h"
 #else
 #include "boards/pico.h"
-#endif
-
 #endif
