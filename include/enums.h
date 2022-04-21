@@ -1,10 +1,5 @@
-/*
- * SPDX-License-Identifier: MIT
- * SPDX-FileCopyrightText: Copyright (c) 2021 Jason Skuby (mytechtoybox.com)
- */
-
-#ifndef ENUMS_H_
-#define ENUMS_H_
+#ifndef _ENUMS_H_
+#define _ENUMS_H_
 
 typedef enum
 {

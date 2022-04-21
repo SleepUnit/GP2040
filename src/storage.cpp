@@ -10,13 +10,13 @@
 #include "FlashPROM.h"
 #include "Animation.hpp"
 #include "CRC32.h"
-#include "display.h"
+
+#include "modules/i2cdisplay.h"
+#include "modules/neopicoleds.h"
 #include "storage.h"
-#include "leds.h"
 
 /* Board stuffs */
-
-BoardOptions getBoardOptions()
+BoardOptions Storage::getBoardOptions()
 {
 	BoardOptions options;
 	EEPROM.get(BOARD_STORAGE_INDEX, options);
@@ -59,7 +59,7 @@ BoardOptions getBoardOptions()
 	return options;
 }
 
-void setBoardOptions(BoardOptions options)
+void Storage::setBoardOptions(BoardOptions options)
 {
 	options.checksum = 0;
 	options.checksum = CRC32::calculate(&options);
@@ -67,21 +67,19 @@ void setBoardOptions(BoardOptions options)
 }
 
 /* LED stuffs */
-
-LEDOptions getLEDOptions()
+LEDOptions Storage::getLEDOptions()
 {
 	LEDOptions options;
 	EEPROM.get(LED_STORAGE_INDEX, options);
 	return options;
 }
 
-void setLEDOptions(LEDOptions options)
+void Storage::setLEDOptions(LEDOptions options)
 {
 	EEPROM.set(LED_STORAGE_INDEX, options);
 }
 
 /* Gamepad stuffs */
-
 void GamepadStorage::start()
 {
 	EEPROM.start();
@@ -121,7 +119,6 @@ void GamepadStorage::setGamepadOptions(GamepadOptions options)
 }
 
 /* Animation stuffs */
-
 AnimationOptions AnimationStorage::getAnimationOptions()
 {
 	AnimationOptions options;

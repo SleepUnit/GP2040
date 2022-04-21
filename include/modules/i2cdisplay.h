@@ -6,10 +6,11 @@
 #ifndef DISPLAY_H_
 #define DISPLAY_H_
 
+#include <string>
 #include <hardware/i2c.h>
 #include "OneBitDisplay.h"
 #include "BoardConfig.h"
-#include "gp2040.h"
+#include "gpmodule.h"
 #include "gamepad.h"
 
 #ifndef BUTTON_LAYOUT
@@ -56,12 +57,23 @@
 #define I2C_SPEED 400000
 #endif
 
-class DisplayModule : public GPModule
+// i2C OLED Display
+class I2CDisplayModule : public GPModule
 {
 public:
-	void setup();
-	void loop();
-	void process(Gamepad *gamepad);
+	virtual bool available();  // GPModule
+	virtual void setup();
+	virtual void loop();
+	virtual void process(Gamepad *gamepad);
+	void clearScreen(int render); // DisplayModule
+	void drawHitbox(int startX, int startY, int buttonRadius, int buttonPadding, Gamepad *gamepad);
+	void drawWasdBox(int startX, int startY, int buttonRadius, int buttonPadding, Gamepad *gamepad);
+	void drawArcadeStick(int startX, int startY, int buttonRadius, int buttonPadding, Gamepad *gamepad);
+	void drawStatusBar();
+	void setStatusBar(Gamepad *gamepad);
+	uint8_t ucBackBuffer[1024];
+	OBDISP obd;
+	std::string statusBar;
 };
 
 #endif
