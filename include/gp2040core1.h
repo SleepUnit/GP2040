@@ -3,8 +3,7 @@
  * SPDX-FileCopyrightText: Copyright (c) 2021 Jason Skuby (mytechtoybox.com)
  */
 
-#ifndef GP2040CORE1_H_
-#define GP2040CORE1_H_
+#pragma once
 
 // GP2040 Classes
 #include "modules/i2cdisplay.h"
@@ -30,4 +29,3 @@ private:
 	PLEDModule playerled;
 };
 
-#endif

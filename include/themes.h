@@ -3,12 +3,11 @@
  * SPDX-FileCopyrightText: Copyright (c) 2021 Jason Skuby (mytechtoybox.com)
  */
 
-#ifndef LED_THEMES_H_
-#define LED_THEMES_H_
+#pragma once
 
 #include "BoardConfig.h"
 #include <vector>
-#include <MPG.h>
+#include "Gamepad.h"
 #include "AnimationStation.hpp"
 #include "helper.h"
 
@@ -298,4 +297,3 @@ void addStaticThemes(LEDOptions options)
 	StaticTheme::AddTheme(themeGuiltyGearTypeE);
 }
 
-#endif

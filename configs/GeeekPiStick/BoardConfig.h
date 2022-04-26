@@ -10,8 +10,6 @@
 #ifndef GEEEK_PI_STICK_CONFIG_H_
 #define GEEEK_PI_STICK_CONFIG_H_
 
-#include <GamepadEnums.h>
-
 #define PIN_DPAD_DOWN    4
 #define PIN_DPAD_UP      5
 #define PIN_DPAD_LEFT    6

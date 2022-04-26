@@ -7,8 +7,8 @@
 #include "pico/util/queue.h"
 #include "pico/stdlib.h"
 #include "hardware/pwm.h"
-#include "GamepadEnums.h"
-#include "xinput_driver.h"
+#include "enums.h"
+#include "drivers/xinput_driver.h"
 
 // Pico Includes
 #include "modules/pleds.h"

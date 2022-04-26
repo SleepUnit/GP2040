@@ -3,8 +3,7 @@
  * SPDX-FileCopyrightText: Copyright (c) 2021 Jason Skuby (mytechtoybox.com)
  */
 
-#ifndef DISPLAY_H_
-#define DISPLAY_H_
+#pragma once
 
 #include <string>
 #include <hardware/i2c.h>
@@ -76,4 +75,3 @@ public:
 	std::string statusBar;
 };
 
-#endif

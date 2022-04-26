@@ -6,8 +6,6 @@
 #ifndef PICO_BOARD_CONFIG_H_
 #define PICO_BOARD_CONFIG_H_
 
-#include <GamepadEnums.h>
-
 #define PIN_DPAD_UP     2
 #define PIN_DPAD_DOWN   3
 #define PIN_DPAD_RIGHT  4

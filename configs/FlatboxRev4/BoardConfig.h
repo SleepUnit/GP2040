@@ -6,8 +6,6 @@
 #ifndef FLATBOX_REV4_CONFIG_H_
 #define FLATBOX_REV4_CONFIG_H_
 
-#include <GamepadEnums.h>
-
 #define PIN_DPAD_UP     16
 #define PIN_DPAD_DOWN   10
 #define PIN_DPAD_LEFT   9

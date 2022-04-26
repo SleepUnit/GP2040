@@ -6,8 +6,6 @@
 #ifndef DURAL_CONFIG_H_
 #define DURAL_CONFIG_H_
 
-#include <GamepadEnums.h>
-
 #define PIN_DPAD_UP     9
 #define PIN_DPAD_DOWN   7
 #define PIN_DPAD_LEFT   6

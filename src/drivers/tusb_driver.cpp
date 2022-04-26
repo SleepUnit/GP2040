@@ -10,12 +10,12 @@
 #include "class/hid/hid.h"
 #include "device/usbd_pvt.h"
 
-#include "GamepadDescriptors.h"
+#include "descriptors/gamepad_descriptors.h"
 
-#include "usb_driver.h"
-#include "net_driver.h"
-#include "hid_driver.h"
-#include "xinput_driver.h"
+#include "drivers/usb_driver.h"
+#include "drivers/net_driver.h"
+#include "drivers/hid_driver.h"
+#include "drivers/xinput_driver.h"
 
 UsbMode usb_mode = USB_MODE_HID;
 InputMode input_mode = INPUT_MODE_XINPUT;

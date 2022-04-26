@@ -6,7 +6,6 @@
 #ifndef HYDRA_CONFIG_H_
 #define HYDRA_CONFIG_H_
 
-#include <GamepadEnums.h>
 #include "enums.h"
 #include "NeoPico.hpp"
 #include "PlayerLEDs.h"

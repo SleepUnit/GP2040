@@ -3,7 +3,7 @@
 #include "helper.h"
 #include "modules/pleds.h"
 #include "storage.h"
-#include "usb_driver.h"
+#include "drivers/usb_driver.h"
 
 // Pico includes
 #include "pico/bootrom.h"

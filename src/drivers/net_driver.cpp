@@ -1,4 +1,4 @@
-#include "net_driver.h"
+#include "drivers/net_driver.h"
 
 const usbd_class_driver_t net_driver = {
 #if CFG_TUSB_DEBUG >= 2

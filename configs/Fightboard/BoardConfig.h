@@ -10,7 +10,6 @@
 #define FIGHTBOARD_CONFIG_H_
 
 #include <vector>
-#include <GamepadEnums.h>
 #include <GamepadState.h>
 #include "Pixel.hpp"
 #include "enums.h"

@@ -72,8 +72,6 @@ Create `configs/NewBoard/BoardConfig.h` and add your pin configuration and optio
 ```cpp
 // BoardConfig.h
 
-#include <GamepadEnums.h>
-
 #define PIN_DPAD_UP     2
 #define PIN_DPAD_DOWN   3
 #define PIN_DPAD_LEFT   4

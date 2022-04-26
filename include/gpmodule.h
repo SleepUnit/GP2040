@@ -1,5 +1,4 @@
-#ifndef _GPModule_H_
-#define _GPModule_H_
+#pragma once
 
 #include "gamepad.h"
 
@@ -12,5 +11,3 @@ public:
 	virtual void process(Gamepad *gamepad) = 0;
 private:
 };
-
-#endif

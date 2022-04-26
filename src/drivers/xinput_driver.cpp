@@ -3,7 +3,7 @@
  * SPDX-FileCopyrightText: Copyright (c) 2021 Jason Skuby (mytechtoybox.com)
  */
 
-#include "xinput_driver.h"
+#include "drivers/xinput_driver.h"
 
 uint8_t endpoint_in = 0;
 uint8_t endpoint_out = 0;

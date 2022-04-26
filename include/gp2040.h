@@ -3,8 +3,7 @@
  * SPDX-FileCopyrightText: Copyright (c) 2021 Jason Skuby (mytechtoybox.com)
  */
 
-#ifndef GP2040_H_
-#define GP2040_H_
+#pragma once
 
 // GP2040 Classes
 #include "gamepad.h"
@@ -22,5 +21,3 @@ private:
     uint8_t featureData[32];
     Gamepad snapshot;
 };
-
-#endif

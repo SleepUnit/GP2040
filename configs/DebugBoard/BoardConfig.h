@@ -14,7 +14,6 @@
 #ifndef DEBUG_BOARD_CONFIG_H_
 #define DEBUG_BOARD_CONFIG_H_
 
-#include <GamepadEnums.h>
 #include "hardware/i2c.h"
 #include "OneBitDisplay/OneBitDisplay.h"
 #include "enums.h"

@@ -6,9 +6,9 @@
 
 #include <wchar.h>
 #include "tusb.h"
-#include "usb_driver.h"
-#include "GamepadDescriptors.h"
-#include "webserver_descriptors.h"
+#include "drivers/usb_driver.h"
+#include "descriptors/gamepad_descriptors.h"
+#include "descriptors/webserver_descriptors.h"
 
 // Invoked when received GET STRING DESCRIPTOR request
 // Application return pointer to descriptor, whose contents must exist long enough for transfer to complete

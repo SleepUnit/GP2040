@@ -5,7 +5,6 @@
 
 #pragma once
 
-#include <GamepadEnums.h>
 #include "enums.h"
 #include "NeoPico.hpp"
 #include "PlayerLEDs.h"
