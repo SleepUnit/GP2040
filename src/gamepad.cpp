@@ -22,7 +22,7 @@ uint64_t getMicro() {
 
 void Gamepad::setup()
 {
-	this->load(); // MPGS loads
+	options = mpgStorage->getGamepadOptions();
 
 	// Configure pin mapping
 	f2Mask = (GAMEPAD_MASK_A1 | GAMEPAD_MASK_S2);
@@ -421,11 +421,6 @@ void Gamepad::process()
 			}
 			break;
 	}
-}
-
-void Gamepad::load()
-{
-	options = mpgStorage->getGamepadOptions();
 }
 
 void Gamepad::save()

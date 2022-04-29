@@ -147,11 +147,6 @@ public:
 		 */
 		XInputReport getXInputReport();
 
- 		/**
-		 * @brief Load the saved configuration from persistent storage.
-		 */
-		void load();
-
 		/**
 		 * @brief Save the current configuration to persistent storage if changed.
 		 */
